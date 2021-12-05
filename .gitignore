@@ -1,0 +1,13 @@
+# Build files are registered here.
+/target
+
+# Private data is saved here.
+/src/config.rs
+
+# Local sqlite files do not need to be pushed.
+*.sqlite
+
+# Gets rid of config files from these IDEs. 
+.vscode
+.idea
+.vs
