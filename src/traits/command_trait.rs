@@ -7,13 +7,17 @@ use crate::structures::extras::Extras;
 
 #[async_trait]
 pub trait Command: Send + Sync {
-    fn name(&self) -> &str;
+    fn name(&self) -> String;
 
-    fn category(&self) -> &str;
+    fn category(&self) -> String;
 
-    fn args(&self) -> Vec<Arg>;
+    fn args(&self) -> Vec<Arg> {
+        return vec![]
+    }
 
-    fn is_owner_only(&self) -> bool;
+    fn is_owner_only(&self) -> bool {
+        return false
+    }
 
     async fn execute(
         &self,

@@ -12,8 +12,8 @@ pub struct PingCommand;
 
 #[async_trait]
 impl Command for PingCommand {
-    fn name(&self) -> &str {
-        "ping"
+    fn name(&self) -> String {
+        "ping".to_owned()
     }
 
     fn args(&self) -> Vec<Arg> {
@@ -41,12 +41,8 @@ impl Command for PingCommand {
         ]
     }
 
-    fn category(&self) -> &str {
-        "info"
-    }
-
-    fn is_owner_only(&self) -> bool {
-        false
+    fn category(&self) -> String {
+        "info".to_owned()
     }
 
     async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args, extras: &Extras) -> Result<(), Box<dyn Error + Send + Sync>> {
