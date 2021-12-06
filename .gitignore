@@ -7,7 +7,7 @@
 # Local sqlite files do not need to be pushed.
 *.sqlite
 *.db
-/neko.db-wal
+/neko.db-shm
 *-wal
 
 # Gets rid of config files from these IDEs.
