@@ -21,7 +21,7 @@ impl Command for PingCommand {
             Arg {
                 name: "test arg".to_string(),
                 description: "this is a test argument.".to_string(),
-                required: true,
+                required: false,
                 example: "10".to_string(),
                 regexes: vec![],
                 expect: RawArgTypes::Integer,
@@ -31,7 +31,7 @@ impl Command for PingCommand {
             Arg {
                 name: "bool".to_string(),
                 description: "this is a test argument.".to_string(),
-                required: true,
+                required: false,
                 example: "true".to_string(),
                 regexes: vec![],
                 expect: RawArgTypes::Bool,
@@ -41,7 +41,7 @@ impl Command for PingCommand {
             Arg {
                 name: "target".to_string(),
                 description: "this is a test argument.".to_string(),
-                required: true,
+                required: false,
                 example: "tmr".to_string(),
                 regexes: vec![],
                 expect: RawArgTypes::String,
