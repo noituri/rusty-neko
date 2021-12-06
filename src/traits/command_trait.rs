@@ -20,5 +20,5 @@ pub trait Command: Send + Sync {
         ctx: &Context,
         msg: &Message,
         args: &Args
-    ) -> Result<(), Box<dyn Error>>;
+    ) -> Result<(), Box<dyn Error + Send + Sync>>;
 }

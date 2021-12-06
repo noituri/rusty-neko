@@ -26,7 +26,7 @@ impl Command for PingCommand {
         false
     }
 
-    async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args) -> Result<(), Box<dyn Error>> {
+    async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args) -> Result<(), Box<dyn Error + Send + Sync>> {
         Ok(())
     }
 }

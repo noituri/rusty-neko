@@ -6,6 +6,7 @@ use crate::structures::bot::Bot;
 use serenity::model::channel::Channel;
 use crate::config;
 use crate::functions::find_command;
+use crate::functions::parse_args::parse_args;
 
 pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
     if msg.author.bot {
@@ -39,13 +40,19 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
 
     match command {
         Ok(command) => {
-            let args: Args = Args {
-                list: vec![]
+            let parsed_args = parse_args(bot, ctx, msg, &command, raw_args).await;
+
+            if parsed_args.is_err() {
+                return;
+            }
+
+            let args = Args {
+                list: parsed_args.unwrap()
             };
 
             let res = command.execute(bot, ctx, msg, &args).await;
 
-            if (res.is_err()) {
+            if res.is_err() {
                 let err = res.unwrap_err();
 
                 let _ = msg.channel_id.send_message(ctx, | m | {
