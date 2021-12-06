@@ -7,13 +7,19 @@ use serenity::client::Context;
 use serenity::model::channel::Message;
 use serenity::utils::Color;
 use crate::enums::raw_arg_types::raw_arg_types;
+use crate::functions::get_command_usage::get_command_usage;
+use crate::functions::plural_for::plural_for;
 use crate::structures::arg::Arg;
 use crate::structures::bot::Bot;
+use crate::structures::extras::Extras;
+use crate::traits::command_trait::Command;
 
-pub async fn handle_arg_error(bot: &Bot, ctx: &Context, msg: &Message, arg: &Arg, current: String, err: String) -> () {
+pub async fn handle_arg_error(bot: &Bot, ctx: &Context, command: &Box<dyn Command>, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) -> () {
     let iso = SystemTime::now();
     let iso: DateTime<Utc> = iso.into();
     let iso = iso.to_rfc3339();
+
+    let usage = get_command_usage(command, extras);
 
     msg.channel_id.send_message(
         ctx,
@@ -83,6 +89,17 @@ pub async fn handle_arg_error(bot: &Bot, ctx: &Context, msg: &Message, arg: &Arg
                         embed.field(
                             "Argument Example",
                             arg.example.to_string(),
+                            false
+                        );
+                    };
+
+                    if !usage.is_empty() {
+                        embed.field(
+                            plural_for("Command Usage", usage.len()),
+                            format!(
+                                "```\n{}```",
+                                usage.join("\n")
+                            ),
                             false
                         );
                     };

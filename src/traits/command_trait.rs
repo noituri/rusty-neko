@@ -3,6 +3,7 @@ use crate::structures::bot::{Bot};
 use serenity::{async_trait, client::Context, model::channel::Message};
 use std::error::Error;
 use crate::structures::arg::Arg;
+use crate::structures::extras::Extras;
 
 #[async_trait]
 pub trait Command: Send + Sync {
@@ -19,6 +20,7 @@ pub trait Command: Send + Sync {
         bot: &Bot,
         ctx: &Context,
         msg: &Message,
-        args: &Args
+        args: &Args,
+        extras: &Extras
     ) -> Result<(), Box<dyn Error + Send + Sync>>;
 }

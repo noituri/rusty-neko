@@ -6,6 +6,7 @@ use crate::structures::bot::{Bot};
 use serenity::{client::Context, model::channel::Message};
 use std::error::Error;
 use crate::enums::raw_arg_types::raw_arg_types;
+use crate::structures::extras::Extras;
 
 pub struct PingCommand; 
 
@@ -25,8 +26,17 @@ impl Command for PingCommand {
                 regexes: vec![],
                 expect: raw_arg_types::Integer,
                 min_len: 0,
-                max_len: 20,
-                rest: false
+                max_len: 20
+            },
+            Arg {
+                name: "target".to_string(),
+                description: "this is a test argument.".to_string(),
+                required: false,
+                example: "tmr".to_string(),
+                regexes: vec![],
+                expect: raw_arg_types::String,
+                min_len: 0,
+                max_len: 0
             }
         ]
     }
@@ -39,7 +49,7 @@ impl Command for PingCommand {
         false
     }
 
-    async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args) -> Result<(), Box<dyn Error + Send + Sync>> {
+    async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args, extras: &Extras) -> Result<(), Box<dyn Error + Send + Sync>> {
         msg.channel_id.send_message(
             ctx,
             | m | {

@@ -5,11 +5,12 @@ use crate::enums::arg_types::arg_types;
 use crate::enums::raw_arg_types::raw_arg_types;
 use crate::functions::handle_arg_error::handle_arg_error;
 use crate::structures::bot::Bot;
+use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 use crate::util::parsers::parse_int::parse_int;
 use crate::util::parsers::parse_string::parse_string;
 
-pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>) -> Result<Vec<arg_types>, ()> {
+pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>, extras: &Extras) -> Result<Vec<arg_types>, ()> {
     let mut parsed_args = Vec::<arg_types>::new();
 
     if command.args().len() == 0 {
@@ -24,7 +25,11 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
         let arg = args.get(i).unwrap();
         let current = {
             if i + 1 == len {
-                Ok(raw_args[i..].join(" "))
+                if raw_args.len() < i {
+                    Err(())
+                } else {
+                    Ok(raw_args[i..].join(" "))
+                }
             } else {
                 let got = raw_args.get(i);
                 if got.is_none() {
@@ -41,14 +46,8 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
         };
 
         if current.is_err() {
-            println!("{}", "F".to_string());
             if arg.required {
-                msg.channel_id.send_message(
-                    ctx,
-                    | m | {
-                        m.content("No argument.")
-                    }
-                ).await;
+                handle_arg_error(bot, ctx, command, extras, msg, arg, "".to_string(), "".to_string()).await;
                 return Err(())
             }
 
@@ -69,7 +68,7 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                     }
 
                     Err(ps) => {
-                        handle_arg_error(bot, ctx, msg, arg, unzip.to_string(), ps).await;
+                        handle_arg_error(bot, ctx, command, extras, msg, arg, unzip.to_string(), ps).await;
                         return Err(())
                     }
                 }
@@ -85,7 +84,7 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                     }
 
                     Err(ps) => {
-                        handle_arg_error(bot, ctx, msg, arg, unzip.to_string(), ps).await;
+                        handle_arg_error(bot, ctx, command, extras, msg, arg, unzip.to_string(), ps).await;
                         return Err(())
                     }
                 }

@@ -8,6 +8,5 @@ pub struct Arg {
     pub regexes: Vec<regex::Regex>,
     pub expect: raw_arg_types,
     pub min_len: usize,
-    pub max_len: usize,
-    pub rest: bool
+    pub max_len: usize
 }
