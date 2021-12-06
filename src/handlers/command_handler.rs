@@ -32,7 +32,7 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
         return;
     }
 
-    let mut raw_args: Vec<&str> = msg.content.trim()[prefix.len()..].split(" ").collect();
+    let mut raw_args: Vec<&str> = msg.content[prefix.len()..].trim().split(" ").collect();
 
     let cmd = raw_args.remove(0).to_lowercase();
 
