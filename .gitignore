@@ -8,7 +8,7 @@
 *.sqlite
 *.db
 *.shm
-*wal
+*-wal
 
 # Gets rid of config files from these IDEs.
 .vscode
