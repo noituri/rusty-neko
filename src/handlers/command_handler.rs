@@ -32,9 +32,9 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
         return;
     }
 
-    let raw_args: Vec<&str> = msg.content.trim()[prefix.len()..].split(" ").collect();
+    let mut raw_args: Vec<&str> = msg.content.trim()[prefix.len()..].split(" ").collect();
 
-    let cmd: String = raw_args.get(0).unwrap().to_lowercase();
+    let cmd = raw_args.remove(0).to_lowercase();
 
     let command = find_command::find_command(cmd.as_str());
 

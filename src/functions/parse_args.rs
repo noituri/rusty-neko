@@ -12,6 +12,7 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
     let mut parsed_args = Vec::<arg_types>::new();
 
     if command.args().len() == 0 {
+        raw_args.iter().for_each(| el | parsed_args.push(arg_types::String(el.to_string())));
         return Ok(parsed_args)
     }
 

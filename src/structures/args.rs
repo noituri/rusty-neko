@@ -8,11 +8,16 @@ pub trait ArgsTrait {
     fn get_unsafe(&self, index: usize) -> &arg_types;
     fn get_number(&self, index: usize) -> Result<&i64, ()>;
     fn get_string(&self, index: usize) -> Result<&str, ()>;
+    fn size(&self) -> usize;
 }
 
 impl ArgsTrait for Args {
     fn get_unsafe(&self, index: usize) -> &arg_types {
         self.list.get(index).unwrap()
+    }
+
+    fn size(&self) -> usize {
+        self.list.len()
     }
 
     fn get_string(&self, index: usize) -> Result<&str, ()> {
