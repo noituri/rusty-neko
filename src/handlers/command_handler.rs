@@ -1,5 +1,4 @@
 use serenity::model::channel::Message;
-use serenity::Client;
 use serenity::client::Context;
 use crate::structures::args::Args;
 use crate::structures::bot::Bot;

@@ -1,4 +1,5 @@
-pub enum raw_arg_types {
+pub enum RawArgTypes {
     Integer,
-    String 
+    String,
+    Bool
 }

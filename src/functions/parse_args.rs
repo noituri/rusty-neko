@@ -1,8 +1,7 @@
-use std::convert::TryInto;
 use serenity::client::Context;
 use serenity::model::channel::Message;
-use crate::enums::arg_types::arg_types;
-use crate::enums::raw_arg_types::raw_arg_types;
+use crate::enums::arg_types::ArgTypes;
+use crate::enums::raw_arg_types::RawArgTypes;
 use crate::functions::handle_arg_error::handle_arg_error;
 use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
@@ -10,11 +9,11 @@ use crate::traits::command_trait::Command;
 use crate::util::parsers::parse_int::parse_int;
 use crate::util::parsers::parse_string::parse_string;
 
-pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>, extras: &Extras) -> Result<Vec<arg_types>, ()> {
-    let mut parsed_args = Vec::<arg_types>::new();
+pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>, extras: &Extras) -> Result<Vec<ArgTypes>, ()> {
+    let mut parsed_args = Vec::<ArgTypes>::new();
 
     if command.args().len() == 0 {
-        raw_args.iter().for_each(| el | parsed_args.push(arg_types::String(el.to_string())));
+        raw_args.iter().for_each(| el | parsed_args.push(ArgTypes::String(el.to_string())));
         return Ok(parsed_args)
     }
 
@@ -51,19 +50,23 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                 return Err(())
             }
 
-            parsed_args.push(arg_types::Empty(()));
+            parsed_args.push(ArgTypes::Empty(()));
             continue;
         }
 
         let unzip = &*current.unwrap();
 
         match arg.expect {
-            raw_arg_types::Integer => {
+            RawArgTypes::Bool => {
+
+            }
+
+            RawArgTypes::Integer => {
                 let ps = parse_int(arg, unzip).await;
 
                 match ps {
                     Ok(ps) => {
-                        parsed_args.push(arg_types::Int(ps));
+                        parsed_args.push(ArgTypes::Int(ps));
                         continue;
                     }
 
@@ -74,12 +77,12 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                 }
             },
 
-            raw_arg_types::String => {
+            RawArgTypes::String => {
                 let ps = parse_string(arg, unzip).await;
 
                 match ps {
                     Ok(ps) => {
-                        parsed_args.push(arg_types::String(ps));
+                        parsed_args.push(ArgTypes::String(ps));
                         continue;
                     }
 

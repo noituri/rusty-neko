@@ -1,18 +1,18 @@
-use crate::enums::arg_types::arg_types;
+use crate::enums::arg_types::ArgTypes;
 
 pub struct Args {
-    pub list: Vec<arg_types>
+    pub list: Vec<ArgTypes>
 }
 
 pub trait ArgsTrait {
-    fn get_unsafe(&self, index: usize) -> &arg_types;
+    fn get_unsafe(&self, index: usize) -> &ArgTypes;
     fn get_number(&self, index: usize) -> Result<&i64, ()>;
     fn get_string(&self, index: usize) -> Result<&str, ()>;
     fn size(&self) -> usize;
 }
 
 impl ArgsTrait for Args {
-    fn get_unsafe(&self, index: usize) -> &arg_types {
+    fn get_unsafe(&self, index: usize) -> &ArgTypes {
         self.list.get(index).unwrap()
     }
 
@@ -24,7 +24,7 @@ impl ArgsTrait for Args {
         let item = self.get_unsafe(index);
 
         match item {
-            arg_types::String(item) => Ok(item),
+            ArgTypes::String(item) => Ok(item),
             _ => Err(())
         }
     }
@@ -33,7 +33,7 @@ impl ArgsTrait for Args {
         let item = self.get_unsafe(index);
 
         match item {
-            arg_types::Int(item) => Ok(item),
+            ArgTypes::Int(item) => Ok(item),
             _ => Err(())
         }
     }

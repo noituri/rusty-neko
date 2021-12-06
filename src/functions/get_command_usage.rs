@@ -9,7 +9,7 @@ pub fn get_command_usage(command: &Box<dyn Command>, extras: &Extras) -> Vec<Str
 
     let mut y: usize = 0;
 
-    for i in 0..len {
+    for _ in 0..len {
         let mut strv = vec![
             format!(
                 "{}{}",

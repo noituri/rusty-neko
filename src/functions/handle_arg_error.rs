@@ -1,12 +1,10 @@
-use std::borrow::{Borrow, BorrowMut};
-use std::ops::{Deref, DerefMut};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime};
 use chrono::{DateTime, Utc};
-use serenity::builder::{CreateEmbedAuthor, Timestamp};
+use serenity::builder::{CreateEmbedAuthor};
 use serenity::client::Context;
 use serenity::model::channel::Message;
 use serenity::utils::Color;
-use crate::enums::raw_arg_types::raw_arg_types;
+use crate::enums::raw_arg_types::RawArgTypes;
 use crate::functions::get_command_usage::get_command_usage;
 use crate::functions::plural_for::plural_for;
 use crate::structures::arg::Arg;
@@ -14,14 +12,14 @@ use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-pub async fn handle_arg_error(bot: &Bot, ctx: &Context, command: &Box<dyn Command>, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) -> () {
+pub async fn handle_arg_error(_bot: &Bot, ctx: &Context, command: &Box<dyn Command>, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) -> () {
     let iso = SystemTime::now();
     let iso: DateTime<Utc> = iso.into();
     let iso = iso.to_rfc3339();
 
     let usage = get_command_usage(command, extras);
 
-    msg.channel_id.send_message(
+    let _ = msg.channel_id.send_message(
         ctx,
         | m | {
             m.add_embed(
@@ -48,11 +46,15 @@ pub async fn handle_arg_error(bot: &Bot, ctx: &Context, command: &Box<dyn Comman
                         .timestamp(iso)
                         .field("Expected", {
                             match arg.expect {
-                                raw_arg_types::Integer => {
+                                RawArgTypes::Integer => {
                                     "Integer"
                                 }
 
-                                raw_arg_types::String => {
+                                RawArgTypes::Bool => {
+                                    "Boolean"
+                                }
+
+                                RawArgTypes::String => {
                                     "String"
                                 }
                             }

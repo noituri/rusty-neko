@@ -2,7 +2,7 @@ use crate::structures::bot::{Bot};
 use serenity::{client::Context};
 use serenity::{model::prelude::Ready};
 
-pub fn ready(bot: &Bot, _ctx: Context, data: Ready) {
+pub fn ready(_bot: &Bot, _ctx: Context, data: Ready) {
     println!(
         "{}",
         format!(

@@ -1,4 +1,4 @@
-pub enum arg_types {
+pub enum ArgTypes {
     String(String),
     Int(i64),
     Bool(bool),

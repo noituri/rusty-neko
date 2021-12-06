@@ -1,8 +1,5 @@
-use std::borrow::Borrow;
-use std::fmt::Debug;
 use sqlx;
 use sqlx::sqlite::SqliteConnectOptions;
-use serenity::async_trait;
 use sqlx::{Pool, Sqlite};
 use crate::structures::bot::Bot;
 
@@ -54,7 +51,7 @@ impl Database {
                     .await;
 
                 match res {
-                    Ok(res) => {
+                    Ok(_) => {
                         println!(
                             "{}",
                             format!(

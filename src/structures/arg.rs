@@ -1,4 +1,4 @@
-use crate::enums::raw_arg_types::raw_arg_types;
+use crate::enums::raw_arg_types::RawArgTypes;
 
 pub struct Arg {
     pub name: String,
@@ -6,7 +6,7 @@ pub struct Arg {
     pub required: bool, 
     pub example: String,
     pub regexes: Vec<regex::Regex>,
-    pub expect: raw_arg_types,
+    pub expect: RawArgTypes,
     pub min_len: usize,
     pub max_len: usize
 }

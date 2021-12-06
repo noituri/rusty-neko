@@ -5,7 +5,7 @@ use crate::structures::args::{Args, ArgsTrait};
 use crate::structures::bot::{Bot};
 use serenity::{client::Context, model::channel::Message};
 use std::error::Error;
-use crate::enums::raw_arg_types::raw_arg_types;
+use crate::enums::raw_arg_types::RawArgTypes;
 use crate::structures::extras::Extras;
 
 pub struct PingCommand; 
@@ -24,7 +24,7 @@ impl Command for PingCommand {
                 required: true,
                 example: "10".to_string(),
                 regexes: vec![],
-                expect: raw_arg_types::Integer,
+                expect: RawArgTypes::Integer,
                 min_len: 0,
                 max_len: 20
             },
@@ -34,7 +34,7 @@ impl Command for PingCommand {
                 required: false,
                 example: "tmr".to_string(),
                 regexes: vec![],
-                expect: raw_arg_types::String,
+                expect: RawArgTypes::String,
                 min_len: 0,
                 max_len: 0
             }
@@ -45,8 +45,8 @@ impl Command for PingCommand {
         "info".to_owned()
     }
 
-    async fn execute(&self, bot: &Bot, ctx: &Context, msg: &Message, args: &Args, extras: &Extras) -> Result<(), Box<dyn Error + Send + Sync>> {
-        msg.channel_id.send_message(
+    async fn execute(&self, _bot: &Bot, ctx: &Context, msg: &Message, args: &Args, _extras: &Extras) -> Result<(), Box<dyn Error + Send + Sync>> {
+        let _ = msg.channel_id.send_message(
             ctx,
             | m | {
                 m.content(
