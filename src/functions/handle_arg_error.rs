@@ -34,9 +34,16 @@ pub async fn handle_arg_error(_bot: &Bot, ctx: &Context, command: &Box<dyn Comma
                         .description(
                             {
                                 if current.is_empty() {
-                                    "No input was provided for a required argument.".to_string()
+                                    format!(
+                                        "No input was provided for required argument `{}`.",
+                                        arg.name.to_owned()
+                                    )
                                 } else {
-                                    err
+                                    format!(
+                                        "{} for argument `{}`.",
+                                        err,
+                                        arg.name.to_owned()
+                                    )
                                 }
                             }
                         )

@@ -1,3 +1,4 @@
+use crate::structures::arg::Arg;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
@@ -7,9 +8,9 @@ pub fn get_command_usage(command: &Box<dyn Command>, extras: &Extras) -> Vec<Str
     let args = &command.args();
     let len = args.len();
 
-    let mut y: usize = 0;
+    let howmany = args.iter().filter(| m | !m.required).collect::<Vec<&Arg>>().len();
 
-    for _ in 0..len {
+    for i in 0..howmany + 1 {
         let mut strv = vec![
             format!(
                 "{}{}",
@@ -18,42 +19,24 @@ pub fn get_command_usage(command: &Box<dyn Command>, extras: &Extras) -> Vec<Str
             )
         ];
 
-        let mut total: usize = 0;
-
-        for x in 0..len {
-            let arg = args.get(x).unwrap();
-
-            if !arg.required {
-                if y != 0 || x == 0 {
-                    strv.push(
-                        format!(
-                            "[{}]",
-                            arg.name.to_string()
-                        )
-                    )
-                };
-            } else {
+        let fields: Vec<&Arg> = args[0..len - howmany + i].iter().collect();
+        for fld in fields {
+            if fld.required {
                 strv.push(
                     format!(
                         "<{}>",
-                        arg.name.to_string()
+                        fld.name.to_owned()
                     )
                 )
-            };
-
-            if !arg.required {
-                if y == 0 {
-                    y += 1;
-                    break;
-                } else if y == total {
-                    y += 1;
-                    break;
-                }
+            } else {
+                strv.push(
+                    format!(
+                        "[{}]",
+                        fld.name.to_owned()
+                    )
+                )
             }
-
-            total += 1;
         }
-
         vc.push(strv.join(" "));
     }
 

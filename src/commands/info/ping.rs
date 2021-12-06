@@ -29,9 +29,19 @@ impl Command for PingCommand {
                 max_len: 20
             },
             Arg {
+                name: "bool".to_string(),
+                description: "this is a test argument.".to_string(),
+                required: true,
+                example: "true".to_string(),
+                regexes: vec![],
+                expect: RawArgTypes::Bool,
+                min_len: 0,
+                max_len: 0
+            },
+            Arg {
                 name: "target".to_string(),
                 description: "this is a test argument.".to_string(),
-                required: false,
+                required: true,
                 example: "tmr".to_string(),
                 regexes: vec![],
                 expect: RawArgTypes::String,

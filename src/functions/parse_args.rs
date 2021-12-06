@@ -6,6 +6,7 @@ use crate::functions::handle_arg_error::handle_arg_error;
 use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
+use crate::util::parsers::parse_bool::parse_bool;
 use crate::util::parsers::parse_int::parse_int;
 use crate::util::parsers::parse_string::parse_string;
 
@@ -58,7 +59,18 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
 
         match arg.expect {
             RawArgTypes::Bool => {
+                let ps = parse_bool(arg, unzip);
 
+                match ps {
+                    Ok(ps) => {
+                        parsed_args.push(ArgTypes::Bool(ps));
+                        continue;
+                    }
+                    Err(ps) => {
+                        handle_arg_error(bot, ctx, command, extras, msg, arg, unzip.to_string(), ps).await;
+                        return Err(())
+                    }
+                }
             }
 
             RawArgTypes::Integer => {
