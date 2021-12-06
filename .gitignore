@@ -6,8 +6,11 @@
 
 # Local sqlite files do not need to be pushed.
 *.sqlite
+*.db
+*.shm
+*wal
 
-# Gets rid of config files from these IDEs. 
+# Gets rid of config files from these IDEs.
 .vscode
 .idea
 .vs
