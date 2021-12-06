@@ -10,18 +10,18 @@ pub struct State {
 impl State {
     pub async fn new() -> Self {
         Self {
-            bot: Bot::new()
+            bot: Bot::new().await
         }
     }
 }
 
 #[async_trait]
 impl EventHandler for State {
-    async fn ready(&self, ctx: Context, data: Ready) {
-        ready::ready(&self.bot, ctx, data)
-    }
-
     async fn message(&self, ctx: Context, new_message: Message) {
         message_create::message_create(&self.bot, ctx, new_message).await;
+    }
+
+    async fn ready(&self, ctx: Context, data: Ready) {
+        ready::ready(&self.bot, ctx, data)
     }
 }
