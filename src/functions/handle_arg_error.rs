@@ -61,9 +61,27 @@ pub async fn handle_arg_error(bot: &Bot, ctx: &Context, msg: &Message, arg: &Arg
                             }
                         }, false);
 
+                    if arg.min_len != 0 || arg.max_len != 0 {
+                        embed.field(
+                            "Range",
+                            format!(
+                                "{}-{}",
+                                arg.min_len,
+                                {
+                                    if arg.max_len != 0 {
+                                        arg.max_len.to_string()
+                                    } else {
+                                        "?".to_string()
+                                    }
+                                }
+                            ),
+                            true
+                        );
+                    };
+
                     if !arg.example.is_empty() {
                         embed.field(
-                            "Example",
+                            "Argument Example",
                             arg.example.to_string(),
                             false
                         );
