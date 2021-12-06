@@ -23,7 +23,7 @@ pub async fn parse_int(arg: &Arg, input: &str) -> Result<i64, String> {
                     return Err(
                         format!(
                             "Supplied int does not fit in the maximum argument size: `{}`",
-                            arg.min_len
+                            arg.max_len
                         )
                     )
                 } 

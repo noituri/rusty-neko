@@ -3,6 +3,7 @@ use serenity::client::Context;
 use serenity::model::channel::Message;
 use crate::enums::arg_types::arg_types;
 use crate::enums::raw_arg_types::raw_arg_types;
+use crate::functions::handle_arg_error::handle_arg_error;
 use crate::structures::bot::Bot;
 use crate::traits::command_trait::Command;
 use crate::util::parsers::parse_int::parse_int;
@@ -29,13 +30,25 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                 if got.is_none() {
                     Err(())
                 } else {
-                    Ok(got.unwrap().to_string())
+                    let d = got.unwrap().to_string();
+                    if d.is_empty() {
+                        return Err(())
+                    }
+
+                    Ok(d)
                 }
             }
         };
 
         if current.is_err() {
+            println!("{}", "F".to_string());
             if arg.required {
+                msg.channel_id.send_message(
+                    ctx,
+                    | m | {
+                        m.content("No argument.")
+                    }
+                ).await;
                 return Err(())
             }
 
@@ -56,6 +69,7 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                     }
 
                     Err(ps) => {
+                        handle_arg_error(bot, ctx, msg, arg, unzip.to_string(), ps).await;
                         return Err(())
                     }
                 }
@@ -71,6 +85,7 @@ pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<d
                     }
 
                     Err(ps) => {
+                        handle_arg_error(bot, ctx, msg, arg, unzip.to_string(), ps).await;
                         return Err(())
                     }
                 }

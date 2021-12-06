@@ -5,6 +5,7 @@ use crate::structures::args::{Args, ArgsTrait};
 use crate::structures::bot::{Bot};
 use serenity::{client::Context, model::channel::Message};
 use std::error::Error;
+use crate::enums::raw_arg_types::raw_arg_types;
 
 pub struct PingCommand; 
 
@@ -15,7 +16,19 @@ impl Command for PingCommand {
     }
 
     fn args(&self) -> Vec<Arg> {
-        return vec![]
+        return vec![
+            Arg {
+                name: "test arg".to_string(),
+                description: "this is a test argument.".to_string(),
+                required: true,
+                example: "10".to_string(),
+                regexes: vec![],
+                expect: raw_arg_types::Integer,
+                min_len: 0,
+                max_len: 20,
+                rest: false
+            }
+        ]
     }
 
     fn category(&self) -> &str {
