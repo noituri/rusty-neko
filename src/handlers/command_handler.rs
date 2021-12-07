@@ -29,11 +29,11 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
         }
     }
 
-    if prefix.len() == 0 {
+    if prefix.is_empty() {
         return;
     }
 
-    let mut raw_args: Vec<&str> = msg.content[prefix.len()..].trim().split(" ").collect();
+    let mut raw_args: Vec<&str> = msg.content[prefix.len()..].trim().split(' ').collect();
 
     let cmd = raw_args.remove(0).to_lowercase();
 

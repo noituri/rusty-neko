@@ -29,7 +29,7 @@ pub async fn parse_int(arg: &Arg, input: &str) -> Result<i64, String> {
                 } 
             }
 
-            return Ok(i)
+            Ok(i)
         },
         Err(cast) => {
             let d: std::num::ParseIntError = cast;

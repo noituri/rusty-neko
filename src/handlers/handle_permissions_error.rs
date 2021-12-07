@@ -1,7 +1,5 @@
-use std::convert::TryInto;
 use std::time::SystemTime;
 use chrono::{DateTime, Utc};
-use serenity::builder::CreateEmbedAuthor;
 use serenity::client::Context;
 use serenity::model::channel::Message;
 use serenity::model::interactions::message_component::ButtonStyle;
@@ -11,7 +9,8 @@ use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-pub async fn handle_permissions_error(bot: &Bot, msg: &Message, cmd: &Box<dyn Command>, ctx: &Context, extras: &Extras, perm_error: PermissionErrors) -> () {
+#[allow(box_pointers)]
+pub async fn handle_permissions_error(_bot: &Bot, msg: &Message, _cmd: &Box<dyn Command>, ctx: &Context, _extras: &Extras, perm_error: PermissionErrors) {
     let _ = msg.channel_id.send_message(
         ctx,
         | m | {
@@ -48,8 +47,8 @@ pub async fn handle_permissions_error(bot: &Bot, msg: &Message, cmd: &Box<dyn Co
                         .color(Color::RED)
                         .description({
                             match perm_error {
-                                PermissionErrors::STAFF => "Only staff members can execute this command.",
-                                PermissionErrors::OWNER => "Only owners can execute this command."
+                                PermissionErrors::Staff => "Only staff members can execute this command.",
+                                PermissionErrors::Owner => "Only owners can execute this command."
                             }
                         })
                 }

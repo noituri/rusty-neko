@@ -1,4 +1,4 @@
 pub enum PermissionErrors {
-    STAFF,
-    OWNER
+    Staff,
+    Owner
 }

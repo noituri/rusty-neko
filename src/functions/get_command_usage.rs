@@ -2,13 +2,14 @@ use crate::structures::arg::Arg;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
+#[allow(box_pointers)]
 pub fn get_command_usage(command: &Box<dyn Command>, extras: &Extras) -> Vec<String> {
     let mut vc = Vec::<String>::new();
 
     let args = &command.args();
     let len = args.len();
 
-    let howmany = args.iter().filter(| m | !m.required).collect::<Vec<&Arg>>().len();
+    let howmany = args.iter().filter(| m | !m.required).count();
 
     for i in 0..howmany + 1 {
         let mut strv = vec![

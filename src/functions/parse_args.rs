@@ -10,10 +10,11 @@ use crate::util::parsers::parse_bool::parse_bool;
 use crate::util::parsers::parse_int::parse_int;
 use crate::util::parsers::parse_string::parse_string;
 
+#[allow(box_pointers)]
 pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>, extras: &Extras) -> Result<Vec<ArgTypes>, ()> {
     let mut parsed_args = Vec::<ArgTypes>::new();
 
-    if command.args().len() == 0 {
+    if command.args().is_empty() {
         raw_args.iter().for_each(| el | parsed_args.push(ArgTypes::String(el.to_string())));
         return Ok(parsed_args)
     }

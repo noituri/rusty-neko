@@ -13,19 +13,19 @@ pub trait Command: Send + Sync {
     fn category(&self) -> String;
 
     fn args(&self) -> Vec<Arg> {
-        return vec![]
+        vec![]
     }
 
     fn staff_only(&self) -> bool {
-        return false;
+        false
     }
 
     fn staff_roles(&self) -> Vec<StaffRoles> {
-        return vec![];
+        vec![]
     }
 
     fn owner_only(&self) -> bool {
-        return false
+        false
     }
 
     async fn execute(

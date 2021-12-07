@@ -1,15 +1,7 @@
-use std::collections::HashMap;
 use crate::structures::bot::Bot;
 use serenity::{async_trait, client::{EventHandler, Context}, model::prelude::Ready};
-use serenity::client::bridge::gateway::event::ShardStageUpdateEvent;
-use serenity::model::channel::{Channel, ChannelCategory, GuildChannel, Message, PartialGuildChannel, Reaction, StageInstance};
-use serenity::model::event::{ChannelPinsUpdateEvent, GuildMembersChunkEvent, GuildMemberUpdateEvent, InviteCreateEvent, InviteDeleteEvent, MessageUpdateEvent, PresenceUpdateEvent, ResumedEvent, ThreadListSyncEvent, ThreadMembersUpdateEvent, TypingStartEvent, VoiceServerUpdateEvent};
-use serenity::model::gateway::Presence;
-use serenity::model::guild::{Emoji, Guild, GuildUnavailable, Integration, Member, PartialGuild, Role, ThreadMember};
-use serenity::model::id::{ApplicationId, ChannelId, EmojiId, GuildId, IntegrationId, MessageId, RoleId};
-use serenity::model::interactions::application_command::ApplicationCommand;
+use serenity::model::channel::Message;
 use serenity::model::interactions::Interaction;
-use serenity::model::prelude::{CurrentUser, User, VoiceState};
 use crate::events::*;
 use crate::events::interaction_create::interaction_create;
 

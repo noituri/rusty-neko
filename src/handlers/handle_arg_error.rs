@@ -12,7 +12,8 @@ use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-pub async fn handle_arg_error(_bot: &Bot, ctx: &Context, command: &Box<dyn Command>, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) -> () {
+#[allow(box_pointers)]
+pub async fn handle_arg_error(_bot: &Bot, ctx: &Context, command: &Box<dyn Command>, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) {
     let iso = SystemTime::now();
     let iso: DateTime<Utc> = iso.into();
     let iso = iso.to_rfc3339();

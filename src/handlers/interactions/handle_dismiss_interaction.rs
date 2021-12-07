@@ -4,7 +4,7 @@ use serenity::model::prelude::InteractionApplicationCommandCallbackDataFlags;
 use serenity::model::prelude::message_component::MessageComponentInteraction;
 use crate::structures::bot::Bot;
 
-pub async fn handle_dismiss_interaction(bot: &Bot, ctx: &Context, interaction: MessageComponentInteraction) {
+pub async fn handle_dismiss_interaction(_bot: &Bot, ctx: &Context, interaction: MessageComponentInteraction) {
     if !interaction.data.custom_id.contains("dismiss") {
         return;
     }
