@@ -2,7 +2,7 @@ use crate::structures::arg::Arg;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-#[allow(box_pointers)]
+#[allow(clippy::borrowed_box)]
 pub fn get_command_usage(command: &Box<dyn Command>, extras: &Extras) -> Vec<String> {
     let mut vc = Vec::<String>::new();
 

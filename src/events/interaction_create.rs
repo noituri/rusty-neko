@@ -8,6 +8,7 @@ pub async fn interaction_create(bot: &Bot, ctx: &Context, interaction: Interacti
     if interaction.kind() == InteractionType::MessageComponent {
         let component = interaction.message_component().unwrap();
 
+        #[allow(clippy::single_match)]
         match component.data.component_type {
             ComponentType::Button => {
                 handle_dismiss_interaction(bot, ctx, component).await;

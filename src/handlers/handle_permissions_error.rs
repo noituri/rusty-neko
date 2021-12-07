@@ -9,7 +9,7 @@ use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-#[allow(box_pointers)]
+#[allow(clippy::borrowed_box)]
 pub async fn handle_permissions_error(_bot: &Bot, msg: &Message, _cmd: &Box<dyn Command>, ctx: &Context, _extras: &Extras, perm_error: PermissionErrors) {
     let _ = msg.channel_id.send_message(
         ctx,

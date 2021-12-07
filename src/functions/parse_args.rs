@@ -10,7 +10,7 @@ use crate::util::parsers::parse_bool::parse_bool;
 use crate::util::parsers::parse_int::parse_int;
 use crate::util::parsers::parse_string::parse_string;
 
-#[allow(box_pointers)]
+#[allow(clippy::borrowed_box)]
 pub async fn parse_args(bot: &Bot, ctx: &Context, msg: &Message, command: &Box<dyn Command>, raw_args: Vec<&str>, extras: &Extras) -> Result<Vec<ArgTypes>, ()> {
     let mut parsed_args = Vec::<ArgTypes>::new();
 
