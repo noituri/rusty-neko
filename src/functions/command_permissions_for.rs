@@ -11,7 +11,6 @@ use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 use crate::util::constants::staff_roles::get_staff_roles;
 
-#[allow(box_pointers)]
 pub async fn command_permissions_for(bot: &Bot, cmd: &dyn Command, ctx: &Context, msg: &Message, extras: &Extras, sendm: bool) -> Result<bool, Box<dyn Error + Sync + Send>> {
     if cmd.owner_only() && !OWNERS.iter().any(| m | *m == msg.author.id.to_string()) {
         if sendm {

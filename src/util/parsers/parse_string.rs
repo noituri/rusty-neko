@@ -1,8 +1,6 @@
 use crate::structures::arg::Arg;
 
-/**
- * Parses a string and validates it, else returns the error.
- */
+#[allow(clippy::collapsible_if)]
 pub async fn parse_string(arg: &Arg, input: &str) -> Result<String, String> {
     for reg in arg.regexes.iter() {
         if !reg.is_match(input) {

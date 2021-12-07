@@ -1,5 +1,6 @@
 use crate::structures::arg::Arg;
 
+#[allow(clippy::collapsible_if)]
 pub async fn parse_int(arg: &Arg, input: &str) -> Result<i64, String> {
     let cast = input.parse::<i64>();
 

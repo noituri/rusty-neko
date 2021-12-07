@@ -12,7 +12,7 @@ use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
-#[allow(box_pointers)]
+#[allow(clippy::too_many_arguments)]
 pub async fn handle_arg_error(_bot: &Bot, ctx: &Context, command: &dyn Command, extras: &Extras, msg: &Message, arg: &Arg, current: String, err: String) {
     let iso = SystemTime::now();
     let iso: DateTime<Utc> = iso.into();
