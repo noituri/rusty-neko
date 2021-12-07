@@ -10,7 +10,7 @@ use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
 
 #[allow(box_pointers)]
-pub async fn handle_permissions_error(_bot: &Bot, msg: &Message, _cmd: &Box<dyn Command>, ctx: &Context, _extras: &Extras, perm_error: PermissionErrors) {
+pub async fn handle_permissions_error(_bot: &Bot, msg: &Message, _cmd: &dyn Command, ctx: &Context, _extras: &Extras, perm_error: PermissionErrors) {
     let _ = msg.channel_id.send_message(
         ctx,
         | m | {

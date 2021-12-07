@@ -46,13 +46,13 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
                 command_string: cmd.to_string()
             };
 
-            let perms = command_permissions_for(bot, &command, ctx, msg, &extras, true).await.unwrap();
+            let perms = command_permissions_for(bot, &*command, ctx, msg, &extras, true).await.unwrap();
 
             if !perms {
                 return;
             }
 
-            let parsed_args = parse_args(bot, ctx, msg, &command, raw_args, &extras).await;
+            let parsed_args = parse_args(bot, ctx, msg, &*command, raw_args, &extras).await;
 
             if parsed_args.is_err() {
                 return;
@@ -81,12 +81,9 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
 
         Err(_) => {
             println!(
-                "{}",
-                format!(
                     "{} tried to run command {} but it does not exist.",
                     msg.author.tag(),
                     cmd 
-                )
             )
         }
     }

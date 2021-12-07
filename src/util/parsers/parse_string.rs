@@ -9,7 +9,7 @@ pub async fn parse_string(arg: &Arg, input: &str) -> Result<String, String> {
             return Err(
                 format!(
                     "Supplied string does not match given regexp: `{}`",
-                    reg.to_string()
+                    reg
                 )
             );
         }

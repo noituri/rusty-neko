@@ -25,13 +25,13 @@ impl Database {
             let mut columns = tbl.columns;
 
             let primclm = columns.remove(0);
-
+            // AFAIK sqlx::query!() macro is safer because it does compile-time checks and escapes the passed values ~ noituri
             sqlx::query(
                 &format!(
                     "CREATE TABLE IF NOT EXISTS {}({} {})",
-                    tbl.name.to_string(),
-                    primclm.name.to_string(),
-                    primclm.kind.to_string()
+                    tbl.name,
+                    primclm.name,
+                    primclm.kind
                 )
             )
                 .execute(&pool)
@@ -42,9 +42,9 @@ impl Database {
                 let res = sqlx::query(
                     &format!(
                         "ALTER TABLE {} ADD COLUMN {} {}",
-                        tbl.name.to_string(),
-                        clm.name.to_string(),
-                        clm.kind.to_string()
+                        tbl.name,
+                        clm.name,
+                        clm.kind
                     )
                 )
                     .execute(&pool)
@@ -53,23 +53,17 @@ impl Database {
                 match res {
                     Ok(_) => {
                         println!(
-                            "{}",
-                            format!(
-                                "Successfully created column {} in table {}.",
-                                clm.name.to_string(),
-                                tbl.name.to_string()
-                            )
+                            "Successfully created column {} in table {}.",
+                            clm.name,
+                            tbl.name
                         )
                     },
                     Err(res) => {
                         println!(
-                            "{}",
-                            format!(
-                                "Failed to create column {} at table {}: {:?}.",
-                                clm.name.to_string(),
-                                tbl.name.to_string(),
-                                res
-                            )
+                            "Failed to create column {} at table {}: {:?}.",
+                            clm.name,
+                            tbl.name,
+                            res
                         )
                     }
                 }
