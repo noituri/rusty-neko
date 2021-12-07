@@ -1,18 +1,22 @@
+use crate::events::interaction_create::interaction_create;
+use crate::events::*;
 use crate::structures::bot::Bot;
-use serenity::{async_trait, client::{EventHandler, Context}, model::prelude::Ready};
 use serenity::model::channel::Message;
 use serenity::model::interactions::Interaction;
-use crate::events::*;
-use crate::events::interaction_create::interaction_create;
+use serenity::{
+    async_trait,
+    client::{Context, EventHandler},
+    model::prelude::Ready,
+};
 
 pub struct State {
-    bot: Bot
+    bot: Bot,
 }
 
 impl State {
     pub async fn new() -> Self {
         Self {
-            bot: Bot::new().await
+            bot: Bot::new().await,
         }
     }
 }

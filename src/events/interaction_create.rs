@@ -1,8 +1,8 @@
-use serenity::client::Context;
-use serenity::model::interactions::{Interaction, InteractionType};
-use serenity::model::interactions::message_component::ComponentType;
 use crate::handlers::interactions::handle_dismiss_interaction::handle_dismiss_interaction;
 use crate::structures::bot::Bot;
+use serenity::client::Context;
+use serenity::model::interactions::message_component::ComponentType;
+use serenity::model::interactions::{Interaction, InteractionType};
 
 pub async fn interaction_create(bot: &Bot, ctx: &Context, interaction: Interaction) {
     if interaction.kind() == InteractionType::MessageComponent {
@@ -14,7 +14,7 @@ pub async fn interaction_create(bot: &Bot, ctx: &Context, interaction: Interacti
                 handle_dismiss_interaction(bot, ctx, component).await;
             }
 
-            _ => ()
+            _ => (),
         }
     }
 }

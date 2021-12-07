@@ -1,14 +1,14 @@
-use crate::traits::command_trait::Command;
-use serenity::async_trait;
+use crate::enums::raw_arg_types::RawArgTypes;
 use crate::structures::arg::Arg;
 use crate::structures::args::{Args, ArgsTrait};
-use crate::structures::bot::{Bot};
+use crate::structures::bot::Bot;
+use crate::structures::extras::Extras;
+use crate::traits::command_trait::Command;
+use serenity::async_trait;
 use serenity::{client::Context, model::channel::Message};
 use std::error::Error;
-use crate::enums::raw_arg_types::RawArgTypes;
-use crate::structures::extras::Extras;
 
-pub struct PingCommand; 
+pub struct PingCommand;
 
 #[async_trait]
 impl Command for PingCommand {
@@ -26,7 +26,7 @@ impl Command for PingCommand {
                 regexes: vec![],
                 expect: RawArgTypes::Integer,
                 min_len: 0,
-                max_len: 20
+                max_len: 20,
             },
             Arg {
                 name: "bool".to_string(),
@@ -36,7 +36,7 @@ impl Command for PingCommand {
                 regexes: vec![],
                 expect: RawArgTypes::Bool,
                 min_len: 0,
-                max_len: 0
+                max_len: 0,
             },
             Arg {
                 name: "target".to_string(),
@@ -46,9 +46,9 @@ impl Command for PingCommand {
                 regexes: vec![],
                 expect: RawArgTypes::String,
                 min_len: 0,
-                max_len: 0
-            }
-        ]
+                max_len: 0,
+            },
+        ];
     }
 
     fn staff_only(&self) -> bool {
@@ -59,18 +59,20 @@ impl Command for PingCommand {
         "info".to_owned()
     }
 
-    async fn execute(&self, _bot: &Bot, ctx: &Context, msg: &Message, args: &Args, _extras: &Extras) -> Result<(), Box<dyn Error + Send + Sync>> {
-        let _ = msg.channel_id.send_message(
-            ctx,
-            | m | {
-                m.content(
-                    format!(
-                        "Command ran with {} arguments.",
-                        args.size()
-                    )
-                )
-            }
-        ).await;
+    async fn execute(
+        &self,
+        _bot: &Bot,
+        ctx: &Context,
+        msg: &Message,
+        args: &Args,
+        _extras: &Extras,
+    ) -> Result<(), Box<dyn Error + Send + Sync>> {
+        let _ = msg
+            .channel_id
+            .send_message(ctx, |m| {
+                m.content(format!("Command ran with {} arguments.", args.size()))
+            })
+            .await;
 
         Ok(())
     }

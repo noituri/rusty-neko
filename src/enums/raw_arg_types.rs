@@ -1,5 +1,5 @@
 pub enum RawArgTypes {
     Integer,
     String,
-    Bool
+    Bool,
 }

@@ -1,13 +1,13 @@
-use serenity::model::channel::Message;
-use serenity::client::Context;
-use crate::structures::args::Args;
-use crate::structures::bot::Bot;
-use serenity::model::channel::Channel;
 use crate::config;
 use crate::functions::command_permissions_for::command_permissions_for;
 use crate::functions::find_command;
 use crate::functions::parse_args::parse_args;
+use crate::structures::args::Args;
+use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
+use serenity::client::Context;
+use serenity::model::channel::Channel;
+use serenity::model::channel::Message;
 
 pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
     if msg.author.bot {
@@ -43,10 +43,12 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
         Ok(command) => {
             let extras = Extras {
                 prefix: prefix.to_string(),
-                command_string: cmd.to_string()
+                command_string: cmd.to_string(),
             };
 
-            let perms = command_permissions_for(bot, &*command, ctx, msg, &extras, true).await.unwrap();
+            let perms = command_permissions_for(bot, &*command, ctx, msg, &extras, true)
+                .await
+                .unwrap();
 
             if !perms {
                 return;
@@ -59,7 +61,7 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
             }
 
             let args = Args {
-                list: parsed_args.unwrap()
+                list: parsed_args.unwrap(),
             };
 
             let res = command.execute(bot, ctx, msg, &args, &extras).await;
@@ -67,23 +69,24 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
             if res.is_err() {
                 let err = res.unwrap_err();
 
-                let _ = msg.channel_id.send_message(ctx, | m | {
-                    m.content(
-                        format!(
+                let _ = msg
+                    .channel_id
+                    .send_message(ctx, |m| {
+                        m.content(format!(
                             "An error occurred while trying to execute `{}`: ```\n{}```",
                             command.name(),
                             err
-                        )
-                    )
-                }).await;
+                        ))
+                    })
+                    .await;
             }
         }
 
         Err(_) => {
             println!(
-                    "{} tried to run command {} but it does not exist.",
-                    msg.author.tag(),
-                    cmd 
+                "{} tried to run command {} but it does not exist.",
+                msg.author.tag(),
+                cmd
             )
         }
     }

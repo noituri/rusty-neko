@@ -1,10 +1,10 @@
+use crate::structures::bot::Bot;
 use sqlx;
 use sqlx::sqlite::SqliteConnectOptions;
 use sqlx::{Pool, Sqlite};
-use crate::structures::bot::Bot;
 
 pub struct Database {
-    pub pool: sqlx::SqlitePool
+    pub pool: sqlx::SqlitePool,
 }
 
 impl Database {
@@ -14,7 +14,7 @@ impl Database {
             .connect_with(
                 SqliteConnectOptions::new()
                     .filename("./neko.db")
-                    .create_if_missing(true)
+                    .create_if_missing(true),
             )
             .await
             .expect("Could not connect to database.");
@@ -26,52 +26,39 @@ impl Database {
 
             let primclm = columns.remove(0);
             // AFAIK sqlx::query!() macro is safer because it does compile-time checks and escapes the passed values ~ noituri
-            sqlx::query(
-                &format!(
-                    "CREATE TABLE IF NOT EXISTS {}({} {})",
-                    tbl.name,
-                    primclm.name,
-                    primclm.kind
-                )
-            )
-                .execute(&pool)
-                .await
-                .expect("Failed to create table");
+            sqlx::query(&format!(
+                "CREATE TABLE IF NOT EXISTS {}({} {})",
+                tbl.name, primclm.name, primclm.kind
+            ))
+            .execute(&pool)
+            .await
+            .expect("Failed to create table");
 
             for clm in columns {
-                let res = sqlx::query(
-                    &format!(
-                        "ALTER TABLE {} ADD COLUMN {} {}",
-                        tbl.name,
-                        clm.name,
-                        clm.kind
-                    )
-                )
-                    .execute(&pool)
-                    .await;
+                let res = sqlx::query(&format!(
+                    "ALTER TABLE {} ADD COLUMN {} {}",
+                    tbl.name, clm.name, clm.kind
+                ))
+                .execute(&pool)
+                .await;
 
                 match res {
                     Ok(_) => {
                         println!(
                             "Successfully created column {} in table {}.",
-                            clm.name,
-                            tbl.name
+                            clm.name, tbl.name
                         )
-                    },
+                    }
                     Err(res) => {
                         println!(
                             "Failed to create column {} at table {}: {:?}.",
-                            clm.name,
-                            tbl.name,
-                            res
+                            clm.name, tbl.name, res
                         )
                     }
                 }
             }
         }
 
-        Self {
-            pool
-        }
+        Self { pool }
     }
 }

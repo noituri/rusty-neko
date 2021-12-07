@@ -1,7 +1,7 @@
 use crate::enums::arg_types::ArgTypes;
 
 pub struct Args {
-    pub list: Vec<ArgTypes>
+    pub list: Vec<ArgTypes>,
 }
 
 pub trait ArgsTrait {
@@ -22,7 +22,7 @@ impl ArgsTrait for Args {
 
         match item {
             ArgTypes::Bool(item) => Ok(item),
-            _ => Err(())
+            _ => Err(()),
         }
     }
 
@@ -35,7 +35,7 @@ impl ArgsTrait for Args {
 
         match item {
             ArgTypes::String(item) => Ok(item),
-            _ => Err(())
+            _ => Err(()),
         }
     }
 
@@ -44,7 +44,7 @@ impl ArgsTrait for Args {
 
         match item {
             ArgTypes::Int(item) => Ok(item),
-            _ => Err(())
+            _ => Err(()),
         }
     }
 }

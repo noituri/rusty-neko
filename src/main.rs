@@ -1,28 +1,22 @@
-use serenity::client::{
-    Client, bridge::gateway::GatewayIntents
-};
+use serenity::client::{bridge::gateway::GatewayIntents, Client};
 
-use structures::{
-    event_handler::State
-};
+use structures::event_handler::State;
 
-mod traits;
-mod util;
-mod structures;
-mod config;
 mod commands;
-mod handlers;
+mod config;
 mod enums;
 mod events;
 mod functions;
+mod handlers;
+mod structures;
+mod traits;
+mod util;
 
 #[tokio::main]
 async fn main() {
     let mut client = Client::builder(config::TOKEN)
         .event_handler(State::new().await)
-        .intents(
-            GatewayIntents::GUILDS | GatewayIntents::GUILD_MESSAGES
-        )
+        .intents(GatewayIntents::GUILDS | GatewayIntents::GUILD_MESSAGES)
         .application_id(877283475894444072)
         .await
         .expect("Failed to create client.");
@@ -31,4 +25,3 @@ async fn main() {
         println!("Failed to start bot, {:?}", why);
     }
 }
-
