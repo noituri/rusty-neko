@@ -4,6 +4,7 @@ use crate::structures::args::Args;
 use crate::structures::bot::Bot;
 use serenity::model::channel::Channel;
 use crate::config;
+use crate::functions::command_permissions_for::command_permissions_for;
 use crate::functions::find_command;
 use crate::functions::parse_args::parse_args;
 use crate::structures::extras::Extras;
@@ -44,6 +45,12 @@ pub async fn command_handler(bot: &Bot, ctx: &Context, msg: &Message) {
                 prefix: prefix.to_string(),
                 command_string: cmd.to_string()
             };
+
+            let perms = command_permissions_for(bot, &command, ctx, msg, &extras, true).await.unwrap();
+
+            if !perms {
+                return;
+            }
 
             let parsed_args = parse_args(bot, ctx, msg, &command, raw_args, &extras).await;
 

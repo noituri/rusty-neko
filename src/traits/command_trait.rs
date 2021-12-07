@@ -2,6 +2,7 @@ use crate::structures::args::Args;
 use crate::structures::bot::{Bot};
 use serenity::{async_trait, client::Context, model::channel::Message};
 use std::error::Error;
+use crate::enums::staff_roles::StaffRoles;
 use crate::structures::arg::Arg;
 use crate::structures::extras::Extras;
 
@@ -15,7 +16,15 @@ pub trait Command: Send + Sync {
         return vec![]
     }
 
-    fn is_owner_only(&self) -> bool {
+    fn staff_only(&self) -> bool {
+        return false;
+    }
+
+    fn staff_roles(&self) -> Vec<StaffRoles> {
+        return vec![];
+    }
+
+    fn owner_only(&self) -> bool {
         return false
     }
 

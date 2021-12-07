@@ -6,6 +6,7 @@ use crate::structures::bot::{Bot};
 use serenity::{client::Context, model::channel::Message};
 use std::error::Error;
 use crate::enums::raw_arg_types::RawArgTypes;
+use crate::enums::staff_roles::StaffRoles;
 use crate::structures::extras::Extras;
 
 pub struct PingCommand; 
@@ -49,6 +50,10 @@ impl Command for PingCommand {
                 max_len: 0
             }
         ]
+    }
+
+    fn staff_only(&self) -> bool {
+        true
     }
 
     fn category(&self) -> String {

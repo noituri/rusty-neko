@@ -23,6 +23,7 @@ async fn main() {
         .intents(
             GatewayIntents::GUILDS | GatewayIntents::GUILD_MESSAGES
         )
+        .application_id(877283475894444072)
         .await
         .expect("Failed to create client.");
 

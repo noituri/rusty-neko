@@ -2,7 +2,7 @@ use serenity::client::Context;
 use serenity::model::channel::Message;
 use crate::enums::arg_types::ArgTypes;
 use crate::enums::raw_arg_types::RawArgTypes;
-use crate::functions::handle_arg_error::handle_arg_error;
+use crate::handlers::handle_arg_error::handle_arg_error;
 use crate::structures::bot::Bot;
 use crate::structures::extras::Extras;
 use crate::traits::command_trait::Command;
